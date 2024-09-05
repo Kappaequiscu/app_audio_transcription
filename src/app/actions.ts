@@ -21,7 +21,7 @@ export async function transcribeAudio(formData: FormData) {
       fs.mkdirSync(tmpDir);
     }
 
-    const filePath = join(tmpDir, audioFile.name);
+    const filePath = join('/tmp', audioFile.name);
 
     fs.writeFileSync(filePath, audioBuffer);
 
