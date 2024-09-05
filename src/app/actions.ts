@@ -15,12 +15,18 @@ export async function transcribeAudio(formData: FormData) {
     const buffer = await audioFile.arrayBuffer();
     const audioBuffer = Buffer.from(buffer);
 
-    const file_path = join(process.cwd(), audioFile.name);
+    // Ensure the tmp directory exists
+    const tmpDir = join(process.cwd(), 'tmp');
+    if (!fs.existsSync(tmpDir)) {
+      fs.mkdirSync(tmpDir);
+    }
 
-    fs.writeFileSync(file_path, audioBuffer);
+    const filePath = join(tmpDir, audioFile.name);
+
+    fs.writeFileSync(filePath, audioBuffer);
 
     const transcription = await openai.audio.transcriptions.create({
-      file: createReadStream(audioFile.name),
+      file: createReadStream(filePath),
       model: "whisper-1",
     });
     
