@@ -1,6 +1,6 @@
 "use server";
 
-import fs from "fs/promises";
+import fs from "fs";
 import { createReadStream } from "fs";
 import OpenAI  from "openai";
 import { join } from "path";
@@ -17,11 +17,11 @@ export async function transcribeAudio(formData: FormData) {
 
     const file_path = join(process.cwd(), audioFile.name);
 
-    await fs.writeFile(file_path, audioBuffer);
+    fs.writeFileSync(file_path, audioBuffer);
 
     const transcription = await openai.audio.transcriptions.create({
-        file: createReadStream(audioFile.name),
-        model: "whisper-1",
+      file: createReadStream(audioFile.name),
+      model: "whisper-1",
     });
     
     return { result: transcription.text };
