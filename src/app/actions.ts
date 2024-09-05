@@ -1,9 +1,9 @@
 "use server";
 
-import fs from "fs";
+import fs from "fs/promises";
 import { createReadStream } from "fs";
-import OpenAI  from "openai";
 import { join } from "path";
+import OpenAI  from "openai";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -15,15 +15,9 @@ export async function transcribeAudio(formData: FormData) {
     const buffer = await audioFile.arrayBuffer();
     const audioBuffer = Buffer.from(buffer);
 
-    // Ensure the tmp directory exists
-    const tmpDir = join(process.cwd(), 'tmp');
-    if (!fs.existsSync(tmpDir)) {
-      fs.mkdirSync(tmpDir);
-    }
-
     const filePath = join('/tmp', audioFile.name);
 
-    fs.writeFileSync(filePath, audioBuffer);
+    fs.writeFile(filePath, audioBuffer);
 
     const transcription = await openai.audio.transcriptions.create({
       file: createReadStream(filePath),
