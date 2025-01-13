@@ -27,11 +27,11 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col min-h-screen items-center justify-center">
+    <main className="flex flex-col min-h-screen items-center">
 
       <h1 className="text-4xl font-bold p-10">Transcriure àudio</h1>
 
-      <div className="p-4 grid grid-cols-2 gap-2">
+      <div className="p-4">
         <div className="flex flex-col items-center">
           <form onSubmit={handleSubmit}>
             <label htmlFor="audio" className="block">
@@ -55,7 +55,7 @@ export default function Home() {
             </button>
           </form>
         </div>
-        <div>
+        <div className="p-4">
           {result}
         </div>
       </div>
