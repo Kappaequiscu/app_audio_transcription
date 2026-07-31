@@ -84,7 +84,7 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Transcriptor d'Àudio
+                Transcriptor d&apos;Àudio
               </h1>
               <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">Converteix els teus àudios a text amb IA</p>
             </div>
@@ -189,7 +189,7 @@ export default function Home() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  <span>Transcrivint l'àudio...</span>
+                  <span>Transcrivint l&apos;àudio...</span>
                 </div>
               ) : (
                 <div className="flex items-center justify-center gap-2">
@@ -226,7 +226,7 @@ export default function Home() {
                     {result.startsWith("Error") ? "Error" : "Transcripció Completada"}
                   </h3>
                   <p className={`text-xs sm:text-sm ${result.startsWith("Error") ? "text-red-600" : "text-green-600"}`}>
-                    {result.startsWith("Error") ? "Hi ha hagut un problema" : "El teu àudio s'ha transcrit correctament"}
+                    {result.startsWith("Error") ? "Hi ha hagut un problema" : "El teu àudio s&apos;ha transcrit correctament"}
                   </p>
                 </div>
                 <div className="relative flex-shrink-0">
@@ -275,7 +275,7 @@ export default function Home() {
               </svg>
             </div>
             <h4 className="font-semibold text-sm sm:text-base text-gray-800">Ràpid i Precís</h4>
-            <p className="text-xs sm:text-sm text-gray-600 mt-1">Transcripció amb IA d'OpenAI Whisper</p>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">Transcripció amb IA d&apos;OpenAI Whisper</p>
           </div>
           <div className="bg-white/70 backdrop-blur-sm rounded-lg sm:rounded-xl p-4 sm:p-5 border border-gray-100">
             <div className="text-purple-600 mb-2">
