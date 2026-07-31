@@ -9,6 +9,7 @@ export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("auto");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (file: File | null) => {
@@ -58,6 +59,7 @@ export default function Home() {
     setLoading(true);
     const formDataToSend = new FormData();
     formDataToSend.append("audio", selectedFile);
+    formDataToSend.append("language", selectedLanguage);
     const response = await transcribeAudio(formDataToSend);
     setResult(response.result);
     setLoading(false);
@@ -173,6 +175,47 @@ export default function Home() {
               )}
             </div>
 
+            {/* Language Selector */}
+            <div className="mt-4 sm:mt-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <div className="flex items-center gap-2">
+                  <svg className="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                  </svg>
+                  Idioma de l&apos;àudio
+                </div>
+              </label>
+              <select
+                value={selectedLanguage}
+                onChange={(e) => setSelectedLanguage(e.target.value)}
+                disabled={loading}
+                className={`w-full px-4 py-3 rounded-xl border-2 transition-all ${
+                  loading
+                    ? "border-gray-200 bg-gray-50 cursor-not-allowed text-gray-500"
+                    : "border-gray-300 hover:border-indigo-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+                } outline-none text-gray-700 font-medium`}
+              >
+                <option value="auto">🌐 Detecció automàtica</option>
+                <option value="ca">🔵 Català</option>
+                <option value="es">🔴 Espanyol</option>
+                <option value="en">🔵 Anglès</option>
+                <option value="fr">🔵 Francès</option>
+                <option value="de">⚫ Alemany</option>
+                <option value="it">🟢 Italià</option>
+                <option value="pt">🟢 Portuguès</option>
+                <option value="nl">🟠 Holandès</option>
+                <option value="pl">🔴 Polonès</option>
+                <option value="ru">🔵 Rus</option>
+                <option value="ja">🔴 Japonès</option>
+                <option value="ko">🔵 Coreà</option>
+                <option value="zh">🔴 Xinès</option>
+                <option value="ar">🟢 Àrab</option>
+              </select>
+              <p className="text-xs text-gray-500 mt-2">
+                Selecciona l&apos;idioma per millorar la precisió de la transcripció
+              </p>
+            </div>
+
             {/* Submit Button */}
             <button
               type="submit"
@@ -226,7 +269,7 @@ export default function Home() {
                     {result.startsWith("Error") ? "Error" : "Transcripció Completada"}
                   </h3>
                   <p className={`text-xs sm:text-sm ${result.startsWith("Error") ? "text-red-600" : "text-green-600"}`}>
-                    {result.startsWith("Error") ? "Hi ha hagut un problema" : "El teu àudio s&apos;ha transcrit correctament"}
+                    {result.startsWith("Error") ? "Hi ha hagut un problema" : "El teu àudio s'ha transcrit correctament"}
                   </p>
                 </div>
                 <div className="relative flex-shrink-0">

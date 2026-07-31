@@ -11,6 +11,7 @@ const openai = new OpenAI({
 
 export async function transcribeAudio(formData: FormData) {
     const audioFile = formData.get("audio") as File;
+    const language = formData.get("language") as string;
 
     // Validate file size (25 MB max for OpenAI Whisper API)
     const maxSize = 25 * 1024 * 1024; // 25 MB in bytes
@@ -31,10 +32,17 @@ export async function transcribeAudio(formData: FormData) {
     await fs.writeFile(filePath, audioBuffer);
 
     try {
-      const transcription = await openai.audio.transcriptions.create({
+      const transcriptionOptions: any = {
         file: createReadStream(filePath),
         model: "whisper-1",
-      });
+      };
+      
+      // Add language parameter if not auto-detect
+      if (language && language !== "auto") {
+        transcriptionOptions.language = language;
+      }
+      
+      const transcription = await openai.audio.transcriptions.create(transcriptionOptions);
   
       return { result: transcription.text, error: false };
     } catch (error: any) {
